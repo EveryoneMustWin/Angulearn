@@ -1,4 +1,7 @@
 (function() {
+
+// https://www.atlassian.com/git/workflows#!workflow-centralized
+
 	var app = angular.module('game', []);
 
 	app.controller('GameController', function() {
