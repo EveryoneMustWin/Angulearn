@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="game">
+<head>
+  	<title>Angular</title>
+  	<!-- Latest compiled and minified CSS -->
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body>
+  	<script src="angular.min.js"></script>
+  	<script src="chemapp.js"></script>
+
+	<div id="wrapper" class="list-group" ng-controller='GameController as game'>
+
+        <section class="tab" ng-controller="TabController as tab">
+	    	<div class="list-group-item" >
+
+		    	<ul class="nav nav-pills">
+		          	<li ng-class="{ active: tab.isSet($index) }" ng-repeat="chemical in game.chemicals">
+		            	<a href ng-click="tab.setTab($index)">{{chemical.name | limitTo: 12 }}</a>
+
+		          	</li>
+		    	</ul>
+
+		        <div ng-show="tab.isSet($index)" ng-repeat="chemical in game.chemicals">
+
+	        		<div class="img-wrap">
+	          			<img ng-src="{{chemical.images[0]}}" />
+			        </div>
+		        </div>
+
+	  		</div>
+	  	</section>
+  	</div>
+</body>
+</html>
