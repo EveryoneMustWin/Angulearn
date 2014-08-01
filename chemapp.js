@@ -12,25 +12,51 @@
 	app.controller('TabController', function() {
 
 	    this.selectChemical = function(a) {
-	      	this.tab = a;
-		  	this.current = chemicals[this.tab];
 
-			this.options = [{
-				name: 'Methyl-trans-cinnamic acid',
-				correct: true
-			}, {
-				name: 'Benzophenone'
-			}, {
-				name: 'Phthalimide'
-			}];
+	    	if (this.options) {
+
+	    		console.log("this.options has contents");
+	    		console.log(chemicals[a].name);
+
+	    		if (this.options[0].name == chemicals[a].name) {
+	    			alert("correct");
+
+			    	// choose a new random chemical
+			      	this.tab = Math.floor(3 * Math.random());
+				  	this.current = chemicals[this.tab];
+
+				  	// choose three possible answers
+					this.options = [{
+						name: this.current.name,
+						correct: true
+					}, {
+						name: 'wrong 1'
+					}, {
+						name: 'wrong 2'
+					}];	    			
+	    		} else {
+	    			alert("false");
+	    		}
+	    	}
+
 	    };
 
 	    this.isSet = function(a) {
 	      return (this.tab === a);
 	    };
 
-		this.selectChemical(Math.floor(3 * Math.random()));
+		this.tab = Math.floor(3 * Math.random());
+		this.current = chemicals[this.tab];
 
+	  	// choose three possible answers
+		this.options = [{
+			name: this.current.name,
+			correct: true
+		}, {
+			name: 'wrong 1'
+		}, {
+			name: 'wrong 2'
+		}];
 
 	});
 

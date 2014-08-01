@@ -12,7 +12,7 @@
 	<div id="wrapper" class="list-group" ng-controller='GameController as game'>
 
         <section class="tab" ng-controller="TabController as tab">
-	    	<div class="list-group-item" >
+	    	<div class="list-group-item" >	
 
 		        <div>
 	        		<div class="img-wrap">
@@ -20,7 +20,11 @@
 			        </div>
 		        </div>
 
-	    		<chem-tabs></chem-tabs>
+				<ul class="nav nav-pills">
+				  	<li ng-class="{ active: true }" ng-repeat="chemical in game.chemicals">
+				    	<a href ng-click="tab.selectChemical($index)">{{chemical.name | limitTo: 12 }}</a>
+				  	</li>
+				</ul>
 	  		</div>
 	  	</section>
   	</div>
