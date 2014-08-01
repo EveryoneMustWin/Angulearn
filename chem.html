@@ -9,10 +9,27 @@
   	<script src="angular.min.js"></script>
   	<script src="chemapp.js"></script>
 
+  	<style>
+  	.quiz-box {
+  		position: absolute;
+  		left: 80px;
+  		top: 80px;
+  		width: 140px;
+  		height: 80px;
+  		background-color: #ffffff;
+  		text-align: center;
+  	}
+
+  	.quiz-answer {
+
+  		font-size: 2em;
+  	}
+  	</style>
+
 	<div id="wrapper" class="list-group" ng-controller='GameController as game'>
 
         <section class="tab" ng-controller="TabController as tab">
-	    	<div class="list-group-item" >	
+	    	<div ng-hide="tab.hasFeedback">	
 
 		        <div>
 	        		<div class="img-wrap">
@@ -25,6 +42,13 @@
 				    	<a href ng-click="tab.selectChemical($index)">{{chemical.name | limitTo: 12 }}</a>
 				  	</li>
 				</ul>
+	  		</div>
+
+	  		<div class="quiz-box" ng-show="tab.hasFeedback">
+	  			<div class="quiz-answer">
+	  				{{tab.feedback.answer}}
+	  			</div>
+	  			<button ng-click="tab.continue()">Continue</button>
 	  		</div>
 	  	</section>
   	</div>

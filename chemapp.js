@@ -13,38 +13,50 @@
 
 	    this.selectChemical = function(a) {
 
+			this.hasFeedback = true;
+
 	    	if (this.options) {
 
 	    		console.log("this.options has contents");
 	    		console.log(chemicals[a].name);
 
 	    		if (this.options[0].name == chemicals[a].name) {
-	    			alert("correct");
 
-			    	// choose a new random chemical
-			      	this.tab = Math.floor(3 * Math.random());
-				  	this.current = chemicals[this.tab];
-
-				  	// choose three possible answers
-					this.options = [{
-						name: this.current.name,
-						correct: true
-					}, {
-						name: 'wrong 1'
-					}, {
-						name: 'wrong 2'
-					}];	    			
+					this.feedback = {
+						answer: "Correct"
+					};
 	    		} else {
-	    			alert("false");
+					this.feedback = {
+						answer: "Wrong"
+					};
 	    		}
 	    	}
-
 	    };
 
 	    this.isSet = function(a) {
 	      return (this.tab === a);
 	    };
 
+	    this.continue = function() {
+
+	    	// choose a new random chemical
+	      	this.tab = Math.floor(3 * Math.random());
+		  	this.current = chemicals[this.tab];
+
+		  	// choose three possible answers
+			this.options = [{
+				name: this.current.name,
+				correct: true
+			}, {
+				name: 'wrong 1'
+			}, {
+				name: 'wrong 2'
+			}];
+
+			this.hasFeedback = false;
+	    }
+
+	    this.hasQuestion = true;
 		this.tab = Math.floor(3 * Math.random());
 		this.current = chemicals[this.tab];
 
