@@ -14,20 +14,24 @@
 	    this.selectChemical = function(a) {
 
 			this.hasFeedback = true;
+			this.tries++;
 
 	    	if (this.options) {
 
-	    		console.log("this.options has contents");
-	    		console.log(chemicals[a].name);
+	    		console.log("this.options");
+	    		console.log(this.options);
 
-	    		if (this.options[0].name == chemicals[a].name) {
+	    		if (this.options[a].correct) {
+
+	    			this.score++;
 
 					this.feedback = {
 						answer: "Correct"
 					};
 	    		} else {
 					this.feedback = {
-						answer: "Wrong"
+						answer: "Wrong",
+						rightAnswer: "(" + this.current.name + ")"
 					};
 	    		}
 	    	}
@@ -37,39 +41,37 @@
 	      return (this.tab === a);
 	    };
 
-	    this.continue = function() {
+
+	   	this.startNewQuiz = function() {
+
+			this.options = $.extend(true, [], chemicals);
+
+		  	// choose three possible answers
+		  	this.options = shuffle(this.options).slice(0, 3);
 
 	    	// choose a new random chemical
 	      	this.tab = Math.floor(3 * Math.random());
-		  	this.current = chemicals[this.tab];
+		  	this.current = this.options[this.tab];
 
-		  	// choose three possible answers
-			this.options = [{
-				name: this.current.name,
-				correct: true
-			}, {
-				name: 'wrong 1'
-			}, {
-				name: 'wrong 2'
-			}];
+		  	console.log("this.tab");
+		  	console.log(this.tab);
+
+		  	this.options[this.tab].correct = true;
+
+    		console.log("chemicals");
+    		console.log(chemicals);
+	   	}
+
+	    this.continue = function() {
+
+	    	this.startNewQuiz();
 
 			this.hasFeedback = false;
 	    }
 
-	    this.hasQuestion = true;
-		this.tab = Math.floor(3 * Math.random());
-		this.current = chemicals[this.tab];
-
-	  	// choose three possible answers
-		this.options = [{
-			name: this.current.name,
-			correct: true
-		}, {
-			name: 'wrong 1'
-		}, {
-			name: 'wrong 2'
-		}];
-
+	   	this.startNewQuiz();
+	   	this.score = 0;
+	   	this.tries = 0;
 	});
 
 	app.directive("chemTabs", function() {
@@ -80,6 +82,28 @@
 		}
 	});
 
+	var shuffle = function(array) {
+
+	  var currentIndex = array.length
+	    , temporaryValue
+	    , randomIndex
+	    ;
+
+	  // While there remain elements to shuffle...
+	  while (0 !== currentIndex) {
+
+	    // Pick a remaining element...
+	    randomIndex = Math.floor(Math.random() * currentIndex);
+	    currentIndex -= 1;
+
+	    // And swap it with the current element.
+	    temporaryValue = array[currentIndex];
+	    array[currentIndex] = array[randomIndex];
+	    array[randomIndex] = temporaryValue;
+	  }
+
+	  return array;
+	};
 
 	var chemicals = [{
 	    name: 'Methyl-trans-cinnamic acid',
@@ -105,31 +129,30 @@
 	    images: [
 	      "images/chem3.png"
 	    ]
-	 }
-	//, {
-	//     name: 'Diaminopyridine',
-	//     description: "Placeholder text.",
-	//     power: 9,
-	//     color: '#EEE',
-	//     images: [
-	//       "images/chem4.png"
-	//     ]
-	// }, {
-	//     name: 'Dibromopyridine',
-	//     description: "Placeholder text.",
-	//     power: 9,
-	//     color: '#EEE',
-	//     images: [
-	//       "images/chem5.png"
-	//     ]
-	// }, {
-	//     name: 'Trans-stilbene',
-	//     description: "Placeholder text.",
-	//     power: 9,
-	//     color: '#EEE',
-	//     images: [
-	//       "images/chem6.png"
-	//     ]
-	// }
+	 }, {
+	    name: 'Diaminopyridine',
+	    description: "Placeholder text.",
+	    power: 9,
+	    color: '#EEE',
+	    images: [
+	      "images/chem4.png"
+	    ]
+	}, {
+	    name: 'Dibromopyridine',
+	    description: "Placeholder text.",
+	    power: 9,
+	    color: '#EEE',
+	    images: [
+	      "images/chem5.png"
+	    ]
+	}, {
+	    name: 'Trans-stilbene',
+	    description: "Placeholder text.",
+	    power: 9,
+	    color: '#EEE',
+	    images: [
+	      "images/chem6.png"
+	    ]
+	}
 	];
 })();

@@ -7,50 +7,113 @@
 </head>
 <body>
   	<script src="angular.min.js"></script>
+    <script src="jquery-1.10.2.min.js"></script>
   	<script src="chemapp.js"></script>
 
   	<style>
-  	.quiz-box {
-  		position: absolute;
-  		left: 80px;
-  		top: 80px;
-  		width: 140px;
-  		height: 80px;
-  		background-color: #ffffff;
-  		text-align: center;
-  	}
 
-  	.quiz-answer {
+      body {
+        background-color: #565;
+      }
 
-  		font-size: 2em;
-  	}
+      #wrapper {
+        background-color: #fff;
+        width: 360px;
+        height: 520px;
+        padding: 8px;
+      }
+
+      #head {
+        width: 100%;
+        height: 40px;
+        background-color: #428bca;
+        color: white;
+      }
+
+      #head-title {
+        padding: 8px;
+/* Inline block works - because the inline part makes it draw line a <span> and the block part makes it use box model*/
+        display: inline-block;
+      }
+
+      #head-score {
+        padding: 8px;
+/* Inline block works - because the inline part makes it draw line a <span> and the block part makes it use box model*/
+        display: inline-block;
+      }
+
+      .continue {
+        background-color: #428bca;
+        color: white;
+        border: 0px solid white;
+        border-radius: 6px;
+        padding: 10px;
+        margin: 20px;
+      }
+
+      #quiz-pic {
+        width: 250px;
+        height: 250px;
+        margin: 40px;
+      }
+
+    	.quiz-box {
+    		position: absolute;
+    		left: 100px;
+    		top: 200px;
+    		width: 140px;
+    		height: 80px;
+    		background-color: #ffffff;
+    		text-align: center;
+    	}
+
+    	.quiz-answer {
+    		font-size: 2em;
+    	}
+
+      .quiz-correction {
+        font-size: 1.2em;
+      }
   	</style>
 
-	<div id="wrapper" class="list-group" ng-controller='GameController as game'>
+	<div id="wrapper" class="list-group">
 
-        <section class="tab" ng-controller="TabController as tab">
-	    	<div ng-hide="tab.hasFeedback">	
+    <section class="tab" ng-controller="TabController as tab">
 
-		        <div>
-	        		<div class="img-wrap">
-	          			<img ng-src="{{tab.current.images[0]}}" />
-			        </div>
-		        </div>
+      <div id="head">
+        <div id="head-title">
+          Chemistry quiz
+        </div>
+        <div id="head-score">
+          {{tab.score}}/{{tab.tries}}
+        </div>
+      </div>
 
-				<ul class="nav nav-pills">
-				  	<li ng-class="{ active: true }" ng-repeat="chemical in game.chemicals">
-				    	<a href ng-click="tab.selectChemical($index)">{{chemical.name | limitTo: 12 }}</a>
-				  	</li>
-				</ul>
-	  		</div>
+    	<div ng-hide="tab.hasFeedback">	
 
-	  		<div class="quiz-box" ng-show="tab.hasFeedback">
-	  			<div class="quiz-answer">
-	  				{{tab.feedback.answer}}
-	  			</div>
-	  			<button ng-click="tab.continue()">Continue</button>
-	  		</div>
-	  	</section>
-  	</div>
+        <div id="quiz-pic">
+      		<div class="img-wrap">
+        			<img ng-src="{{tab.current.images[0]}}" />
+	        </div>
+        </div>
+
+  			<ul class="nav nav-pills nav-stacked">
+  			  	<li ng-class="{ active: true }" ng-repeat="chemical in tab.options">
+  			    	<a href ng-click="tab.selectChemical($index)">{{chemical.name }}</a>
+  			  	</li>
+  			</ul>
+  		</div>
+
+  		<div class="quiz-box" ng-show="tab.hasFeedback">
+  			<div class="quiz-answer">
+  				{{tab.feedback.answer}}
+  			</div>
+        <div class="quiz-correction">
+          {{tab.feedback.rightAnswer}}
+        </div>
+  			<button class="continue" ng-click="tab.continue()">Continue</button>
+  		</div>
+  	</section>
+  </div>
 </body>
 </html>
